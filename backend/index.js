@@ -7,10 +7,11 @@ const cookieParser=require("cookie-parser")
 require("./db/conn")
 
 const app=express();
-const port=process.env.port;
+const port=process.env.PORT;
 const url=process.env.URL;
 //middleware 
 app.use(cors({ origin: url, credentials: true }));
+
 app.use(express.json());
 app.use(cookieParser())
 app.use(router)
