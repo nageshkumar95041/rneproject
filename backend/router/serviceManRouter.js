@@ -87,7 +87,7 @@ router.post("/login",async(req,res)=>{
        
                    const token=  await serviceMan.generateAuthToken()
                    res.cookie("jwt",token,{httpOnly:true,sameSite: 'strict',path: '/',
-                   expires: new Date(new Date().getTime() + 100 * 1000)}).json({login:true
+                   expires: new Date(new Date().getTime() + 100 * 1000),secure:true}).json({login:true
                    })
                 //    res.json({
                 //     login:true,
@@ -401,7 +401,7 @@ router.post("/userlogin",async(req,res)=>{
 
                 const token=  await user.generateAuthToken()
                    res.cookie("userToken",token,{httpOnly:true,sameSite: 'strict',path: '/',
-                   expires: new Date(new Date().getTime() + 100 * 100000000)}).json({login:true
+                   expires: new Date(new Date().getTime() + 100 * 100000000),secure:true}).json({login:true
                    })
            
             }
