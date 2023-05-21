@@ -86,7 +86,7 @@ router.post("/login",async(req,res)=>{
         if(login){
        
                    const token=  await serviceMan.generateAuthToken()
-                   res.cookie("jwt",token,{httpOnly:true,sameSite: 'strict',path: '/',
+                   res.cookie("jwt",token,{httpOnly:true,sameSite: 'None',path: '/',
                    expires: new Date(new Date().getTime() + 100 * 1000),secure:true}).json({login:true
                    })
                 //    res.json({
@@ -400,7 +400,7 @@ router.post("/userlogin",async(req,res)=>{
             if(login){
 
                 const token=  await user.generateAuthToken()
-                   res.cookie("userToken",token,{httpOnly:true,sameSite: 'strict',path: '/',
+                   res.cookie("userToken",token,{httpOnly:true,sameSite: 'None',path: '/',
                    expires: new Date(new Date().getTime() + 100 * 100000000),secure:true}).json({login:true
                    })
            
