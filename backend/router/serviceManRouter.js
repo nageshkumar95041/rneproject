@@ -1,6 +1,7 @@
 const express =require("express");
 const serviceMancoll=require("../model/serviceManSchema")
 const userCollection=require("../model/userSchema")
+const adminCollection=require("../model/adminSchema")
 const cloudinary=require("../utils/cloudinary")
 const upload=require("../utils/multer")
 const path=require("path")
