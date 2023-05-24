@@ -379,7 +379,79 @@ router.post("/contactmessage",async(req,res)=>{
 
 
 
+// admin registration
+router.post("/adminRegistration",async(req,res)=>{
+    const {name,email,userName,password}=req.body
+    try{
+      const users = new adminCollection({name:name,userName:userName,email:email,password:password}) 
+      const result=  await users.save()
+      res.status(201).json({
+        message:"admin registration successful",
+        type:"success"
+      })
+    }catch(err){
+        console.log(err)
+    }
+})
 
+
+router.post("/adminlogin",async(req,res)=>{
+    try{
+        const userName=req.body.userName;
+        const password=req.body.password;
+        const user= await adminCollection.findOne({userName:userName})
+        if(!user){
+          res.json({
+            message:"Invalid credentials",
+            login:false
+          })
+
+
+        }
+        else{
+            const  dbPassword=user.password;
+            const login= await bcrypt.compare(password,dbPassword)
+            if(login){
+
+                const token=  await user.generateAuthToken()
+                   res.cookie("userToken",token,{httpOnly:true,sameSite: 'None',path: '/',
+                   expires: new Date(new Date().getTime() + 100 * 100000000),secure:true}).json({login:true
+                   })
+           
+            }
+            else{
+                res.json({
+                    message:"Invalid credentials",
+                    login:false
+                  })
+            }
+        }
+    }catch(err){
+        console.log(err)
+    }
+   
+
+})
+
+
+// admin auth
+router.get("/adminPage",auth, async(req,res)=>{
+    try{
+     if(req.auth){
+
+         res.status(200).json({
+            auth:true
+         })
+     }
+     else{
+        res.json({
+          auth:false  
+        })
+     }
+    }catch(err){
+        res.status(404).json(err)
+    }
+})
 
 router.post("/userlogin",async(req,res)=>{
     try{
